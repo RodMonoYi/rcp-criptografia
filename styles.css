@@ -1,0 +1,131 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+input,
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.result {
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+}
+
+.result p {
+  font-size: 16px;
+  color: #333;
+}
+
+.result .title {
+  font-weight: bold;
+}
+
+.advanced-key {
+  margin-top: 20px;
+}
+
+.advanced-key input {
+  width: 100%;
+  background-color: #e9ecef;
+}
+
+.toggle-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: auto;
+  margin-top: 10px;
+}
+
+.toggle-btn:hover {
+  background-color: #218838;
+}
+
+.disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.interface {
+  display: none;
+}
+
+.interface.active {
+  display: block;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+#btns {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px;
+  grid-column: 2;
+  margin-bottom: 20px;
+}
+
+#descriptografia {
+  display: none;
+}
+
+#btnDescriptografia {
+  background-color: #28a745;
+}

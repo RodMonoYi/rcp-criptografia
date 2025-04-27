@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criptografia e Descriptografia</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Criptografia e Descriptografia</h1>
+
+        <div id="btns">
+            <button id="btnCriptografia">Criptografia</button>
+            <button id="btnDescriptografia">Descriptografia</button>
+        </div>
+        
+        <!-- Criptografia -->
+        <div id="criptografia"> 
+            <!-- Interface Simples -->
+            <div class="interface simple-interface active" id="simpleInterface">
+                <div class="form-group">
+                    <label for="inputText">Texto Original</label>
+                    <input type="text" id="inputText" placeholder="Digite o texto para criptografar">
+                </div>
+
+                <div class="form-group">
+                    <label for="encodeLevel">Encode Level</label>
+                    <input type="number" id="encodeLevel" value="2" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="deslocamentos">Deslocamentos (separados por vírgula)</label>
+                    <input type="text" id="deslocamentos" value="1,2">
+                    <div id="deslocamentosError" class="error" style="display: none;">O número de deslocamentos deve ser
+                        igual ao encodeLevel.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="intervaloLixo">Intervalo de Lixo</label>
+                    <input type="number" id="intervaloLixo" value="3" min="1">
+                </div>
+
+                <button onclick="gerarResultados('simple')">Gerar Criptografia</button>
+
+                <button class="toggle-btn" onclick="toggleInterface('advanced')">Usar Chave de Codificação
+                    Avançada</button>
+            </div>
+
+            <!-- Interface Avançada -->
+            <div class="interface advanced-interface" id="advancedInterface">
+                <div class="advanced-key">
+                    <label for="advancedText">Texto para Chave Avançada</label>
+                    <input type="text" id="advancedText" placeholder="Digite o texto para criptografar">
+
+                    <label for="advancedParams">Parâmetros Avançados (separados por `;`)</label>
+                    <input type="text" id="advancedParams" placeholder="Ex: 2;1,2;3">
+                </div>
+
+                <button onclick="gerarResultados('advanced')">Gerar Criptografia</button>
+
+                <button class="toggle-btn" onclick="toggleInterface('simple')">Voltar à Interface Simples</button>
+            </div>
+
+            <div class="result" id="resultContainer1" style="display: none;">
+                <p><span class="title">Texto Criptografado:</span> <span id="cryptedText"></span></p>
+                <p><span class="title">Chave de Codificação:</span> <span id="keyText"></span></p>
+                <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText"></span></p>
+            </div>
+        </div>
+
+        <!-- Descriptografia -->
+        <div id="descriptografia">
+            <div>
+                <label for="inputTextoCriptografado">Texto criptografado</label>
+                <input type="text" id="inputTextoCriptografado" placeholder="Digite o texto criptografado">
+
+                <label for="inputParametrosDescriptografar">Digite os parametros de codificação usados no texto (separados por `;`)</label>
+                <input type="text" id="inputParametrosDescriptografar" placeholder="Ex: 2;1,2;3">
+            </div>
+
+            <button onclick="DescriptografarTexto()">Quebrar Criptografia</button>
+
+            <div class="result" id="resultContainer2" style="display: none;">
+                <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText2"></span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
