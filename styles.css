@@ -258,3 +258,9 @@ hr {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.credits p{
+  color: #686868;
+  margin: 3px auto;
+  font-size: 0.8em;
+}
