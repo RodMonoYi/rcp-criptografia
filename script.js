@@ -1,5 +1,5 @@
 tooltipModal = document.getElementById('tooltipModal');
-let showModal = true;
+let showModal = false;
 
 function toggleShowModal() {
     showModal = !showModal;
