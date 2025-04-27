@@ -1,3 +1,13 @@
+tooltipModal = document.getElementById('tooltipModal');
+let showModal = true;
+
+function toggleShowModal() {
+    showModal = !showModal;
+    tooltipModal.style.display = showModal ? 'flex' : 'none';
+}
+
+
+
 let mode = 'criptografia';
 document.getElementById('btnCriptografia').addEventListener('click', function () {
     mode = 'criptografia';

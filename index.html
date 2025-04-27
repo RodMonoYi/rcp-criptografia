@@ -6,87 +6,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criptografia e Descriptografia</title>
     <link rel="stylesheet" href="styles.css">
-    
+
 </head>
 
 <body>
 
-    <div class="container">
-        <h1>Criptografia e Descriptografia</h1>
+    <div id="mainContent">
+        <div class="container">
+            <h1 style="margin-bottom: 2px;">RCP - Criptografia e Descriptografia</h1>
+            <span
+                style="display: block; text-align: right; font-size: 0.85rem; color: rgb(150, 150, 150); margin-bottom: 40px;">by:
+                rod.jsx</span>
 
-        <div id="btns">
-            <button id="btnCriptografia">Criptografia</button>
-            <button id="btnDescriptografia">Descriptografia</button>
+            <div id="btns">
+                <button id="btnCriptografia">Criptografia</button>
+                <button id="btnDescriptografia">Descriptografia</button>
+            </div>
+
+            <!-- Criptografia -->
+            <div id="criptografia">
+                <!-- Interface Simples -->
+                <div class="interface simple-interface active" id="simpleInterface">
+                    <div class="form-group">
+                        <label for="inputText">Texto Original</label>
+                        <textarea id="inputText" placeholder="Digite o texto para criptografar" rows="10"></textarea>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="encodeLevel">Encode Level</label>
+                        <input type="number" id="encodeLevel" value="2" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deslocamentos">Deslocamentos (separados por vírgula)</label>
+                        <input type="text" id="deslocamentos" value="1,2">
+                        <div id="deslocamentosError" class="error" style="display: none;">O número de deslocamentos deve
+                            ser
+                            igual ao encodeLevel.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intervaloLixo">Intervalo de Lixo</label>
+                        <input type="number" id="intervaloLixo" value="3" min="1">
+                    </div>
+
+                    <button class="actBtn" onclick="gerarResultados('simple')">Gerar Criptografia</button>
+
+                    <div class="container-toggle-btn">
+                        <button class="toggle-btn" onclick="toggleInterface('advanced')">Usar Chave de Codificação
+                            Avançada</button>
+                    </div>
+                </div>
+
+                <!-- Interface Avançada -->
+                <div class="interface advanced-interface" id="advancedInterface">
+                    <div class="advanced-key">
+                        <div class="form-group">
+                            <label for="advancedText">Texto Original</label>
+                            <textarea id="advancedText" placeholder="Digite o texto para criptografar"
+                                rows="10"></textarea>
+                        </div>
+
+                        <label for="advancedParams">Parâmetros Avançados (separados por `;`)</label>
+                        <input type="text" id="advancedParams" placeholder="Ex: 2;1,2;3">
+                    </div>
+
+                    <button class="actBtn" onclick="gerarResultados('advanced')">Gerar Criptografia</button>
+
+                    <div class="container-toggle-btn">
+                        <button class="toggle-btn" onclick="toggleInterface('simple')">Voltar à Interface
+                            Simples</button>
+                    </div>
+                </div>
+
+                <div class="result" id="resultContainer1" style="display: none;">
+                    <p><span class="title">Texto Criptografado:</span> <span id="cryptedText"></span></p>
+                    <p><span class="title">Chave de Codificação:</span> <span id="keyText"></span></p>
+                    <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText"></span></p>
+                </div>
+            </div>
+
+            <!-- Descriptografia -->
+            <div id="descriptografia">
+                <div>
+
+                    <div class="form-group">
+                        <label for="inputTextoCriptografado">Texto Original</label>
+                        <textarea id="inputTextoCriptografado" placeholder="Digite o texto criptografado"
+                            rows="10"></textarea>
+                    </div>
+
+                    <hr>
+
+                    <label for="inputParametrosDescriptografar">Digite os parametros de codificação usados no texto
+                        (separados por `;`)</label>
+                    <input type="text" id="inputParametrosDescriptografar" placeholder="Ex: 2;1,2;3">
+                </div>
+
+                <button class="actBtn" onclick="DescriptografarTexto()">Quebrar Criptografia</button>
+
+                <div class="result" id="resultContainer2" style="display: none;">
+                    <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText2"></span></p>
+                </div>
+            </div>
+
         </div>
-        
-        <!-- Criptografia -->
-        <div id="criptografia"> 
-            <!-- Interface Simples -->
-            <div class="interface simple-interface active" id="simpleInterface">
-                <div class="form-group">
-                    <label for="inputText">Texto Original</label>
-                    <input type="text" id="inputText" placeholder="Digite o texto para criptografar">
-                </div>
-
-                <div class="form-group">
-                    <label for="encodeLevel">Encode Level</label>
-                    <input type="number" id="encodeLevel" value="2" min="1">
-                </div>
-
-                <div class="form-group">
-                    <label for="deslocamentos">Deslocamentos (separados por vírgula)</label>
-                    <input type="text" id="deslocamentos" value="1,2">
-                    <div id="deslocamentosError" class="error" style="display: none;">O número de deslocamentos deve ser
-                        igual ao encodeLevel.</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="intervaloLixo">Intervalo de Lixo</label>
-                    <input type="number" id="intervaloLixo" value="3" min="1">
-                </div>
-
-                <button onclick="gerarResultados('simple')">Gerar Criptografia</button>
-
-                <button class="toggle-btn" onclick="toggleInterface('advanced')">Usar Chave de Codificação
-                    Avançada</button>
-            </div>
-
-            <!-- Interface Avançada -->
-            <div class="interface advanced-interface" id="advancedInterface">
-                <div class="advanced-key">
-                    <label for="advancedText">Texto para Chave Avançada</label>
-                    <input type="text" id="advancedText" placeholder="Digite o texto para criptografar">
-
-                    <label for="advancedParams">Parâmetros Avançados (separados por `;`)</label>
-                    <input type="text" id="advancedParams" placeholder="Ex: 2;1,2;3">
-                </div>
-
-                <button onclick="gerarResultados('advanced')">Gerar Criptografia</button>
-
-                <button class="toggle-btn" onclick="toggleInterface('simple')">Voltar à Interface Simples</button>
-            </div>
-
-            <div class="result" id="resultContainer1" style="display: none;">
-                <p><span class="title">Texto Criptografado:</span> <span id="cryptedText"></span></p>
-                <p><span class="title">Chave de Codificação:</span> <span id="keyText"></span></p>
-                <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText"></span></p>
-            </div>
+        <div onclick="toggleShowModal()" id="help">
+            ?
         </div>
+    </div>
 
-        <!-- Descriptografia -->
-        <div id="descriptografia">
-            <div>
-                <label for="inputTextoCriptografado">Texto criptografado</label>
-                <input type="text" id="inputTextoCriptografado" placeholder="Digite o texto criptografado">
 
-                <label for="inputParametrosDescriptografar">Digite os parametros de codificação usados no texto (separados por `;`)</label>
-                <input type="text" id="inputParametrosDescriptografar" placeholder="Ex: 2;1,2;3">
+    <div id="tooltipModal">
+        <div id="modal">
+            <div id="modalHeader">
+                <h2>Sobre o RCP</h2>
+                <!-- <button id="closeModalBtn" onclick="closeModal()">X</button> -->
             </div>
 
-            <button onclick="DescriptografarTexto()">Quebrar Criptografia</button>
+            <hr>
 
-            <div class="result" id="resultContainer2" style="display: none;">
-                <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText2"></span></p>
+            <div id="modalBody">
+                <p>O RCP (Rod Cryptography Protocol) é uma ferramenta de criptografia e descriptografia de
+                    textos que utiliza técnicas de deslocamento de caracteres e manipulação avançada de dados para
+                    proteger a sua mensagem.</p>
+
+                <p>Para usar o RCP, basta inserir o texto que deseja criptografar ou descriptografar, escolher os
+                    parâmetros
+                    desejados e clicar no botão correspondente.</p>
+
+                <p>Desenvolvido por: <a href="https://github.com/RodMonoYi/rcp-criptografia" target="_blank">rod.jsx</a>
+                </p>
+                <p>Versão: 1.0.2</p>
+                <p>Data de Lançamento: 27/04/2025</p>
+            </div>
+
+            <hr>
+
+            <div id="modalFooter">
+                <button id="closeModalBtn2" onclick="toggleShowModal()">Fechar</button>
             </div>
         </div>
 
