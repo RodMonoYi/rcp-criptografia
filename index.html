@@ -4,160 +4,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criptografia e Descriptografia</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <title>RCP - Advanced Cryptography Protocol</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
-
-    <div id="mainContent">
-        <div class="container">
-            <h1 style="margin-bottom: 2px;">RCP - Criptografia e Descriptografia</h1>
-            <span
-                style="display: block; text-align: right; font-size: 0.85rem; color: rgb(150, 150, 150); margin-bottom: 40px;">by:
-                rod.jsx</span>
-
-            <div id="btns">
-                <button id="btnCriptografia">Criptografia</button>
-                <button id="btnDescriptografia">Descriptografia</button>
-            </div>
-
-            <!-- Criptografia -->
-            <div id="criptografia">
-                <!-- Interface Simples -->
-                <div class="interface simple-interface active" id="simpleInterface">
-                    <div class="form-group">
-                        <label for="inputText">Texto Original</label>
-                        <textarea id="inputText" placeholder="Digite o texto para criptografar" rows="10"></textarea>
-                    </div>
-
-                    <hr>
-
-                    <div class="form-group">
-                        <label for="encodeLevel">Encode Level</label>
-                        <input type="number" id="encodeLevel" value="2" min="1">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="deslocamentos">Deslocamentos (separados por vírgula)</label>
-                        <input type="text" id="deslocamentos" value="1,2">
-                        <div id="deslocamentosError" class="error" style="display: none;">O número de deslocamentos deve
-                            ser
-                            igual ao encodeLevel.</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="intervaloLixo">Intervalo de Lixo</label>
-                        <input type="number" id="intervaloLixo" value="3" min="1">
-                    </div>
-
-                    <button class="actBtn" onclick="gerarResultados('simple')">Gerar Criptografia</button>
-
-                    <div class="container-toggle-btn">
-                        <button class="toggle-btn" onclick="toggleInterface('advanced')">Usar Chave de Codificação
-                            Avançada</button>
-                    </div>
-                </div>
-
-                <!-- Interface Avançada -->
-                <div class="interface advanced-interface" id="advancedInterface">
-                    <div class="advanced-key">
-                        <div class="form-group">
-                            <label for="advancedText">Texto Original</label>
-                            <textarea id="advancedText" placeholder="Digite o texto para criptografar"
-                                rows="10"></textarea>
-                        </div>
-
-                        <label for="advancedParams">Parâmetros Avançados (separados por `;`)</label>
-                        <input type="text" id="advancedParams" placeholder="Ex: 2;1,2;3">
-                    </div>
-
-                    <button class="actBtn" onclick="gerarResultados('advanced')">Gerar Criptografia</button>
-
-                    <div class="container-toggle-btn">
-                        <button class="toggle-btn" onclick="toggleInterface('simple')">Voltar à Interface
-                            Simples</button>
-                    </div>
-                </div>
-
-                <div class="result" id="resultContainer1" style="display: none;">
-                    <p><span class="title">Texto Criptografado:</span> <span id="cryptedText"></span></p>
-                    <p><span class="title">Chave de Codificação:</span> <span id="keyText"></span></p>
-                    <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText"></span></p>
-                </div>
-            </div>
-
-            <!-- Descriptografia -->
-            <div id="descriptografia">
+    <div class="app-container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-lock"></i></div>
                 <div>
+                    <div class="logo-text" data-i18n="logoText">RCP Protocol</div>
+                    <div class="version">v2.0.1</div>
+                    <span data-i18n="welcome">Welcome to RCP</span>
+                </div>
+                <div class="language-switcher-container">
+                    <select id="languageSwitcher">
+                        <option value="en">English</option>
+                        <option value="pt">Português</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                    </select>
+                </div>
+            </div>
+            <div class="nav-tabs">
+                <button class="tab-btn active" id="btnCriptografia">
+                    <i class="fas fa-lock"></i> <span data-i18n="encryptTab"></span>
+                </button>
+                <button class="tab-btn" id="btnDescriptografia">
+                    <i class="fas fa-unlock"></i> <span data-i18n="decryptTab">Decrypt</span>
+                </button>
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <label for="inputTextoCriptografado">Texto Original</label>
-                        <textarea id="inputTextoCriptografado" placeholder="Digite o texto criptografado"
-                            rows="10"></textarea>
+        <div class="main-content">
+            <!-- Encryption Panel -->
+            <div class="panel" id="criptografia">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-lock panel-icon"></i> <span data-i18n="secureEncryption">Secure
+                            Encryption</span>
                     </div>
-
-                    <hr>
-
-                    <label for="inputParametrosDescriptografar">Digite os parametros de codificação usados no texto
-                        (separados por `;`)</label>
-                    <input type="text" id="inputParametrosDescriptografar" placeholder="Ex: 2;1,2;3">
+                    <div class="badge badge-secondary" data-i18n="militaryGrade">Military Grade</div>
                 </div>
 
-                <button class="actBtn" onclick="DescriptografarTexto()">Quebrar Criptografia</button>
+                <div class="tabs">
+                    <div class="tab active" data-tab="simple" data-i18n="standardTab">Standard</div>
+                    <div class="tab" data-tab="advanced" data-i18n="advancedTab">Advanced</div>
+                </div>
 
-                <div class="result" id="resultContainer2" style="display: none;">
-                    <p><span class="title">Texto Descriptografado:</span> <span id="decryptedText2"></span></p>
+                <!-- Standard Encryption -->
+                <div class="tab-content active" id="simple-tab">
+                    <div class="form-group">
+                        <label for="inputText" data-i18n="originalTextLabel">Original Text</label>
+                        <textarea id="inputText" class="form-control" placeholder="Enter text to encrypt..." rows="5"
+                            data-i18n-placeholder="enterTextEncrypt"></textarea>
+                    </div>
+
+                    <div class="divider">
+                        <span class="divider-text" data-i18n="encryptionParams">Encryption Parameters</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="encodeLevelLabel" for="encodeLevel" data-i18n="securityLevelLabel">Security
+                            Level</label>
+                        <input type="range" id="encodeLevel" min="1" max="5" value="2" class="form-control">
+                        <div class="security-meter">
+                            <div class="security-level" style="width: 40%;"></div>
+                        </div>
+                        <div class="security-info">
+                            <span class="security-label" data-i18n="basicLabel">Basic</span>
+                            <span class="security-label" data-i18n="militaryLabel">Military</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deslocamentos" data-i18n="shiftValuesLabel">Shift Values (comma separated)</label>
+                        <input type="text" id="deslocamentos" value="1,2" class="form-control" placeholder="e.g. 1,2,3"
+                            data-i18n-placeholder="shiftValuesPlaceholder">
+                        <div id="deslocamentosError" class="error"
+                            style="display: none; color: var(--danger); font-size: 0.8rem; margin-top: 0.5rem;"
+                            data-i18n="shiftValuesError">
+                            Number of shifts must match Security Level
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intervaloLixo" data-i18n="noiseIntervalLabel">Noise Interval</label>
+                        <input type="number" id="intervaloLixo" value="3" min="1" class="form-control">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="gerarResultados('simple')">
+                        <i class="fas fa-key"></i> <span data-i18n="encryptTextButton">Encrypt Text</span>
+                    </button>
+                </div>
+
+                <!-- Advanced Encryption -->
+                <div class="tab-content" id="advanced-tab">
+                    <div class="form-group">
+                        <label for="advancedText" data-i18n="advancedOriginalTextLabel">Original Text</label>
+                        <textarea id="advancedText" class="form-control" placeholder="Enter text to encrypt..." rows="5"
+                            data-i18n-placeholder="advancedEnterTextEncrypt"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="advancedParams" data-i18n="advancedParamsLabel">Advanced Parameters (separated by
+                            `;`)</label>
+                        <div class="input-group">
+                            <input type="text" id="advancedParams" class="form-control"
+                                placeholder="Format: SecurityLevel;ShiftValues;NoiseInterval"
+                                data-i18n-placeholder="advancedParamsPlaceholder">
+                            <div class="input-group-append" onclick="showAdvancedHelp()">
+                                <i class="fas fa-question"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="gerarResultados('advanced')">
+                        <i class="fas fa-user-secret"></i> <span data-i18n="advancedEncryptButton">Advanced
+                            Encrypt</span>
+                    </button>
+                </div>
+
+                <!-- Results -->
+                <div class="result-container" id="resultContainer1">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <div class="terminal-title" data-i18n="encryptionResults">RCP Encryption Results</div>
+                        </div>
+                        <div class="terminal-content">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span> <span data-i18n="encryptionSuccess">Encryption
+                                    completed successfully</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">></span> <span data-i18n="securityLevel">Security
+                                    level:</span> <span id="securityLevelDisplay">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">
+                            <span data-i18n="encryptedTextLabel">Encrypted Text</span>
+                            <button class="copy-btn" onclick="copyToClipboard('cryptedText')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="result-value" id="cryptedText"></div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">
+                            <span data-i18n="encryptionKeyLabel">Encryption Key</span>
+                            <button class="copy-btn" onclick="copyToClipboard('keyText')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="result-value" id="keyText"></div>
+                    </div>
+
+                    <!-- <div class="result-item">
+                        <div class="result-label">
+                            <span data-i18n="testDecryptionLabel">Test Decryption</span>
+                        </div>
+                        <div class="result-value" id="decryptedText"></div>
+                    </div> -->
                 </div>
             </div>
 
+            <!-- Decryption Panel -->
+            <div class="panel" id="descriptografia" style="display: none;">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <i class="fas fa-unlock panel-icon"></i> <span data-i18n="secureDecryption">Secure
+                            Decryption</span>
+                    </div>
+                    <div class="badge badge-primary" data-i18n="aesCompatible">AES-256 Compatible</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTextoCriptografado" data-i18n="encryptedTextLabel">Encrypted Text</label>
+                    <textarea id="inputTextoCriptografado" class="form-control"
+                        placeholder="Paste encrypted text here..." rows="5"
+                        data-i18n-placeholder="pasteEncryptedText"></textarea>
+                </div>
+
+                <div class="divider">
+                    <span class="divider-text" data-i18n="decryptionKey">Decryption Key</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputParametrosDescriptografar" data-i18n="encryptionParamsLabel">Encryption Parameters
+                        (separated by `;`)</label>
+                    <input type="text" id="inputParametrosDescriptografar" class="form-control"
+                        placeholder="Format: SecurityLevel;ShiftValues;NoiseInterval"
+                        data-i18n-placeholder="encryptionParamsPlaceholder">
+                </div>
+
+                <button class="btn btn-secondary" onclick="DescriptografarTexto()">
+                    <i class="fas fa-unlock-alt"></i> <span data-i18n="decryptTextButton">Decrypt Text</span>
+                </button>
+
+                <div class="result-container" id="resultContainer2">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <div class="terminal-title" data-i18n="decryptionResults">RCP Decryption Results</div>
+                        </div>
+                        <div class="terminal-content">
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">$</span> <span data-i18n="decryptionSuccess">Decryption
+                                    completed successfully</span>
+                            </div>
+                            <div class="terminal-line">
+                                <span class="terminal-prompt">></span> <span data-i18n="integrityCheck">Integrity
+                                    check:</span> <span id="integrityCheck">passed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <div class="result-label">
+                            <span data-i18n="decryptedTextLabel">Decrypted Text</span>
+                            <button class="copy-btn" onclick="copyToClipboard('decryptedText2')">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="result-value" id="decryptedText2"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div onclick="toggleShowModal()" id="help">
-            ?
+
+        <div class="status-bar">
+            <div class="connection-status">
+                <div class="status-dot animation-pulse"></div>
+                <span data-i18n="secureConnection">Secure Connection Established</span>
+            </div>
+            <div>RCP Protocol v2.0.1</div>
         </div>
     </div>
 
+    <!-- Help Button -->
+    <div class="help-btn" id="help" onclick="toggleShowModal()">
+        <i class="fas fa-question"></i>
+    </div>
 
-    <div id="tooltipModal" style="display: none;">
-        <div id="modal">
-            <div id="modalHeader">
-                <h2>Sobre o RCP</h2>
-                <!-- <button id="closeModalBtn" onclick="closeModal()">X</button> -->
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="tooltipModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" data-i18n="documentationTitle">RCP Protocol Documentation</div>
+                <button class="modal-close" onclick="toggleShowModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
+            <div class="modal-body">
+                <p data-i18n="documentationIntro">The RCP (Rod Cryptography Protocol) is an advanced encryption tool
+                    that combines multiple cryptographic techniques to provide military-grade security for your
+                    sensitive data.</p>
 
-            <hr>
-
-            <div id="modalBody">
-                <p>O RCP (Rod Cryptography Protocol) é uma ferramenta de criptografia e descriptografia de
-                    textos que utiliza técnicas de deslocamento de caracteres e manipulação avançada de dados para
-                    proteger a sua mensagem.</p>
-
-                <p>Para usar o RCP, basta inserir o texto que deseja criptografar ou descriptografar, escolher os
-                    parâmetros
-                    desejados e clicar no botão correspondente.</p>
-
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-title" data-i18n="multiLayerSecurityTitle">Multi-Layer Security</div>
+                        <div class="feature-desc" data-i18n="multiLayerSecurityDesc">Combines character shifting, noise
+                            injection, and string manipulation for robust protection.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div class="feature-title" data-i18n="customizableSecurityTitle">Customizable Security</div>
+                        <div class="feature-desc" data-i18n="customizableSecurityDesc">Adjust security levels and
+                            parameters to match your specific protection needs.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="feature-title" data-i18n="twoWayProtectionTitle">Two-Way Protection</div>
+                        <div class="feature-desc" data-i18n="twoWayProtectionDesc">Full encryption and decryption
+                            capabilities with key-based access control.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <div class="feature-title" data-i18n="advancedOptionsTitle">Advanced Options</div>
+                        <div class="feature-desc" data-i18n="advancedOptionsDesc">Expert mode for manual parameter
+                            configuration and specialized use cases.</div>
+                    </div>
+                </div>
 
                 <div class="credits">
-                    <p>Desenvolvido por: <a href="https://github.com/RodMonoYi/rcp-criptografia"
-                            target="_blank">rod.jsx</a>
-                    </p>
-                    <p>Versão: 1.0.2</p>
-                    <p>Data de Lançamento: 27/04/2025</p>
+                    <p data-i18n="developedBy" style="display: inline-block;">Developed by: </p>
+                    <span><a target="_blank" data-i18n="rod" href="https://github.com/RodMonoYi">@rod.jsx</a></span>
+                    <p>Version: 2.0.1 | Release Date: 28/04/2025</p>
+                    <p>© 2025 RCP Security Solutions. All rights reserved.</p>
                 </div>
             </div>
-
-            <hr>
-
-            <div id="modalFooter">
-                <button id="closeModalBtn2" onclick="toggleShowModal()">Fechar</button>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="toggleShowModal()" data-i18n="closeDocumentationButton">
+                    Close Documentation
+                </button>
             </div>
         </div>
-
     </div>
 
+    <div class="floating-particles" id="particles"></div>
     <script src="script.js"></script>
-
 </body>
 
 </html>
